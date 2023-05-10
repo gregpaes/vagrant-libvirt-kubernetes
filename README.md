@@ -8,46 +8,33 @@ Current k8s version for CKA, CKAD and CKS exam: 1.26
 Refer this link for documentation: https://devopscube.com/kubernetes-cluster-vagrant/
 
 ## About this repo
-This repo is a fork from https://github.com/techiescamp/vagrant-kubeadm-kubernetes
-In which we made same tweaks to enable persistence volumes, the addition of a nfs-server VM, nfs-subdir-external-provisioner on the k8s cluster
+This repo is a fork from https://github.com/gregpaes/vagrant-kubeadm-kubernetes-nfs
+In which we made same tweaks to replace the virtualbox provider with vagrant-libvirt, enable persistence volumes, the addition of a nfs-server VM, nfs-subdir-external-provisioner on the k8s cluster
 
 Refer this link for nfs-subdir-external-provisioner documentation: https://github.com/kubernetes-sigs/nfs-subdir-external-provisioner
 
 ## Prerequisites
 
 1. Working Vagrant setup
+  Arch Linux users, refer the above links for documentation: 
+  https://computingforgeeks.com/install-kvm-qemu-virt-manager-arch-manjar/
+  https://www.adaltas.com/en/2018/09/19/kvm-vagrant-archlinux/
+
 2. 8 Gig + RAM workstation as the Vms use 3 vCPUS and 4+ GB RAM
-
-## For MAC/Linux Users
-
-Latest version of Virtualbox for Mac/Linux can cause issues.
-
-Create/edit the /etc/vbox/networks.conf file and add the following to avoid any network related issues.
-<pre>* 0.0.0.0/0 ::/0</pre>
-
-or run below commands
-
-```shell
-sudo mkdir -p /etc/vbox/
-echo "* 0.0.0.0/0 ::/0" | sudo tee -a /etc/vbox/networks.conf
-```
-
-So that the host only networks can be in any range, not just 192.168.56.0/21 as described here:
-https://discuss.hashicorp.com/t/vagrant-2-2-18-osx-11-6-cannot-create-private-network/30984/23
 
 ## Bring Up the Cluster
 
 To provision the cluster, execute the following commands.
 
 ```shell
-git clone https://github.com/gregpaes/vagrant-kubeadm-kubernetes-nfs.git
-cd vagrant-kubeadm-kubernetes-nfs
+git clone https://github.com/gregpaes/vagrant-libvirt-kubeadm-kubernetes-nfs.git
+cd vagrant-libvirt-kubeadm-kubernetes-nfs
 vagrant up
 ```
 ## Set Kubeconfig file variable
 
 ```shell
-cd vagrant-kubeadm-kubernetes-nfs
+cd vagrant-libvirt-kubeadm-kubernetes-nfs
 cd configs
 export KUBECONFIG=$(pwd)/config
 ```
