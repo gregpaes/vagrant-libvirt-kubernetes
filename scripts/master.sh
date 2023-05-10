@@ -53,7 +53,12 @@ EOF
 
 helm repo add metrics-server https://kubernetes-sigs.github.io/metrics-server/
 
-helm upgrade --install metrics-server metrics-server/metrics-server
+helm upgrade --install metrics-server metrics-server/metrics-server \
+--namespace kube-system \
+--set containerPort=4443 \
+--set hostNetwork.enabled=true \
+--set args[0]="--secure-port=4443" \
+--set args[1]="--kubelet-insecure-tls=true"
 
 # Install nfs-provider
 helm repo add nfs-subdir-external-provisioner https://kubernetes-sigs.github.io/nfs-subdir-external-provisioner/
