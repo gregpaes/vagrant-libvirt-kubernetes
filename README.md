@@ -29,7 +29,7 @@ To provision the cluster, execute the following commands.
 ```shell
 git clone https://github.com/gregpaes/vagrant-libvirt-kubeadm-kubernetes-nfs.git
 cd vagrant-libvirt-kubeadm-kubernetes-nfs
-vagrant up
+vagrant up --provider=libvirt --no-parallel
 ```
 ## Set Kubeconfig file variable
 
