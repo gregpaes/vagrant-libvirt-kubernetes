@@ -6,7 +6,6 @@ set -euxo pipefail
 
 config_path="/vagrant/configs"
 
-DASHBOARD_VERSION=$(grep -E '^\s*dashboard:' /vagrant/settings.yaml | sed -E 's/[^:]+: *//')
 sleep 60
 if [ -n "${DASHBOARD_VERSION}" ]; then
   while kubectl -n kube-system get pods -A -l app.kubernetes.io/name=metrics-server | awk 'split($3, a, "/") && a[1] != a[2] { print $0; }' | grep -v "RESTARTS"; do
@@ -82,6 +81,4 @@ spec:
       targetPort: 8443 # Application port
       protocol: TCP
 EOF
-
-
 fi
