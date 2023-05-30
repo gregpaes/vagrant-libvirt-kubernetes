@@ -68,9 +68,10 @@ echo "CRI runtime installed susccessfully"
 
  apt-get update
  apt-get install -y apt-transport-https ca-certificates curl nfs-common
- curl -fsSLo /usr/share/keyrings/kubernetes-archive-keyring.gpg https://packages.cloud.google.com/apt/doc/apt-key.gpg
+ #curl -fsSLo /usr/share/keyrings/kubernetes-archive-keyring.gpg https://packages.cloud.google.com/apt/doc/apt-key.gpg
+ curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key add -
 
-echo "deb [signed-by=/usr/share/keyrings/kubernetes-archive-keyring.gpg] https://apt.kubernetes.io/ kubernetes-xenial main" |  tee /etc/apt/sources.list.d/kubernetes.list
+echo "deb https://packages.cloud.google.com/apt kubernetes-xenial main" |  tee /etc/apt/sources.list.d/kubernetes.list
  apt-get update -y
  apt-get install -y kubelet="$KUBERNETES_VERSION" kubectl="$KUBERNETES_VERSION" kubeadm="$KUBERNETES_VERSION"
  apt-get update -y
