@@ -88,8 +88,3 @@ cat > /etc/default/kubelet << EOF
 KUBELET_EXTRA_ARGS=--node-ip=$local_ip
 ${ENVIRONMENT}
 EOF
-
-apt -y install qemu-guest-agent
-
-systemctl enable qemu-guest-agent
-systemctl start qemu-guest-agent
