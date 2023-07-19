@@ -1,12 +1,3 @@
-
-# Vagrantfile and Scripts to Automate Kubernetes Setup using Kubeadm [Practice Environment for CKA/CKAD and CKS Exams]
-
-## Documentation
-
-Current k8s version for CKA, CKAD and CKS exam: 1.26
-
-Refer this link for documentation: https://devopscube.com/kubernetes-cluster-vagrant/
-
 ## About this repo
 This repo is a fork from https://github.com/gregpaes/vagrant-kubeadm-kubernetes-nfs
 In which we made same tweaks to replace the virtualbox provider with vagrant-libvirt, enable persistence volumes, the addition of a nfs-server VM, nfs-subdir-external-provisioner on the k8s cluster
@@ -31,20 +22,6 @@ git clone https://github.com/gregpaes/vagrant-libvirt-kubeadm-kubernetes-nfs.git
 cd vagrant-libvirt-kubeadm-kubernetes-nfs
 vagrant up --provider=libvirt --no-parallel
 ```
-## Set Kubeconfig file variable
-
-```shell
-cd vagrant-libvirt-kubeadm-kubernetes-nfs
-cd configs
-export KUBECONFIG=$(pwd)/config
-```
-
-or you can copy the config file to .kube directory.
-
-```shell
-cp config ~/.kube/
-```
-
 ## Install Kubernetes Dashboard
 
 The dashboard is automatically installed by default, but it can be skipped by commenting out the dashboard version in _settings.yaml_ before running `vagrant up`.
@@ -56,7 +33,7 @@ vagrant ssh -c "/vagrant/scripts/dashboard.sh" master
 
 ## Kubernetes Dashboard Access
 
-To get the login token, copy it from _config/token_ or run the following command:
+To get the login token, copy it from the terminal output, after the first vagrant up or run the following command:
 ```shell
 kubectl -n kubernetes-dashboard get secret/admin-user -o go-template="{{.data.token | base64decode}}"
 ```
