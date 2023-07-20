@@ -1,5 +1,5 @@
 ## About this repo
-This repo is a fork from [https://github.com/gregpaes/vagrant-kubeadm-kubernetes-nfs](https://github.com/techiescamp/vagrant-kubeadm-kubernetes)
+This repo is a fork from [techiescamp/vagrant-kubeadm-kubernetes](https://github.com/techiescamp/vagrant-kubeadm-kubernetes)
 In which we made same tweaks to replace the virtualbox provider with vagrant-libvirt, enable persistence volumes, the addition of a nfs-server VM, nfs-subdir-external-provisioner on the k8s cluster
 
 Refer this link for nfs-subdir-external-provisioner documentation: https://github.com/kubernetes-sigs/nfs-subdir-external-provisioner
