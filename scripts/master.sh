@@ -38,33 +38,23 @@ mkdir -p /home/vagrant/.kube
 /bin/cp -rf $config_path/config /home/vagrant/.kube/
 chown -R vagrant:vagrant /home/vagrant/.kube/config
 chown -R vagrant:vagrant $config_path
-sleep 60
+sleep 15
 
 # Install Calico Network Plugin
 
 kubectl apply -f https://raw.githubusercontent.com/projectcalico/calico/v${CALICO_VERSION}/manifests/calico.yaml
 
-# Install nfs-provider
-helm repo add nfs-subdir-external-provisioner https://kubernetes-sigs.github.io/nfs-subdir-external-provisioner/
-
-helm upgrade --install nfs-subdir-external-provisioner \
-nfs-subdir-external-provisioner/nfs-subdir-external-provisioner \
---namespace nfs-provisioner \
---create-namespace \
---set nfs.server=$CONTROL_IP \
---set nfs.path=/srv/nfs/kubedata \
---set storageClass.defaultClass=true
-
-sleep 60
+sleep 15
 
 # Install Metrics Server
 
 #kubectl apply -f https://raw.githubusercontent.com/techiescamp/kubeadm-scripts/main/manifests/metrics-server.yaml
 
-helm repo add metrics-server https://kubernetes-sigs.github.io/metrics-server/
+#helm repo add metrics-server https://kubernetes-sigs.github.io/metrics-server/
 
-helm upgrade --install metrics-server metrics-server/metrics-server \
+helm upgrade --install metrics-server metrics-server \
 --namespace kube-system \
+--repo https://kubernetes-sigs.github.io/metrics-server/ \
 --set containerPort=4443 \
 --set hostNetwork.enabled=true \
 --set defaultArgs[0]="--cert-dir=/tmp" \

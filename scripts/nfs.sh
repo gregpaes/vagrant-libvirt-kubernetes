@@ -4,17 +4,17 @@ set -euxo pipefail
 
 # Variable Declaration
 
-# DNS Setting
-echo "[TASK 1] DNS Setting"
-if [ ! -d /etc/systemd/resolved.conf.d ]; then
-	mkdir /etc/systemd/resolved.conf.d/
-fi
-cat <<EOF | tee /etc/systemd/resolved.conf.d/dns_servers.conf
-[Resolve]
-DNS=${DNS_SERVERS}
-EOF
+# # DNS Setting
+# echo "[TASK 1] DNS Setting"
+# if [ ! -d /etc/systemd/resolved.conf.d ]; then
+# 	mkdir /etc/systemd/resolved.conf.d/
+# fi
+# cat <<EOF | tee /etc/systemd/resolved.conf.d/dns_servers.conf
+# [Resolve]
+# DNS=${DNS_SERVERS}
+# EOF
 
-systemctl restart systemd-resolved
+# systemctl restart systemd-resolved
 
 # # Update hosts file
 # echo "[TASK 1] Update /etc/hosts file"
@@ -53,3 +53,16 @@ systemctl enable nfs-kernel-server
 
 echo "[TASK 8] Start NFS Server"
 systemctl restart nfs-kernel-server
+
+# Install nfs-provider
+#helm repo add nfs-subdir-external-provisioner 
+
+echo "[TASK 9] Installing nfs-subdir-external-provisioner"
+helm upgrade --install nfs-subdir-external-provisioner \
+nfs-subdir-external-provisioner \
+--repo https://kubernetes-sigs.github.io/nfs-subdir-external-provisioner/ \
+--namespace nfs-provisioner \
+--create-namespace \
+--set nfs.server=$CONTROL_IP \
+--set nfs.path=/srv/nfs/kubedata \
+--set storageClass.defaultClass=true

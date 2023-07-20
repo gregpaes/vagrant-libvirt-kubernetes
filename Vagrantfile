@@ -59,11 +59,6 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
         "SERVICE_CIDR" => settings["network"]["service_cidr"]
       },
       path: "scripts/master.sh"
-    master.vm.provision "shell",
-      env: {
-        "DNS_SERVERS" => settings["network"]["dns_servers"].join(" "),
-      },
-      path: "scripts/nfs.sh"
   end
 
   (1..NUM_WORKER_NODES).each do |i|
@@ -103,6 +98,20 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
           },
           path: "scripts/dashboard.sh"
       end
+      if i == NUM_WORKER_NODES and settings["extras"]["metallb"] and settings["extras"]["metallb"] = "true"
+        node.vm.provision "shell",
+          path: "scripts/metallb.sh"
+      end
+      if i == NUM_WORKER_NODES and settings["extras"]["ingress-nginx"] and settings["extras"]["ingress-nginx"] = "true"
+        node.vm.provision "shell",
+          path: "scripts/ingress.sh"
+      end
+    end
+  end
+  if NUM_WORKER_NODES != "0" and NUM_WORKER_NODES != "" and settings["extras"]["nfs"] and settings["extras"]["nfs"] = "true"
+    config.vm.define "master" do |master|
+      master.vm.provision "shell",
+      path: "scripts/nfs.sh"
     end
   end
 end 
