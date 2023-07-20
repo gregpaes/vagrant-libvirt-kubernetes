@@ -59,6 +59,10 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
         "SERVICE_CIDR" => settings["network"]["service_cidr"]
       },
       path: "scripts/master.sh"
+    if NUM_WORKER_NODES != "0" and NUM_WORKER_NODES != "" and settings["extras"]["nfs"] and settings["extras"]["nfs"] = "true"
+      master.vm.provision "shell",
+        path: "scripts/nfs.sh"
+    end
   end
 
   (1..NUM_WORKER_NODES).each do |i|
@@ -106,12 +110,6 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
         node.vm.provision "shell",
           path: "scripts/ingress.sh"
       end
-    end
-  end
-  if NUM_WORKER_NODES != "0" and NUM_WORKER_NODES != "" and settings["extras"]["nfs"] and settings["extras"]["nfs"] = "true"
-    config.vm.define "master" do |master|
-      master.vm.provision "shell",
-      path: "scripts/nfs.sh"
     end
   end
 end 
