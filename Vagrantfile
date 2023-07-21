@@ -61,6 +61,9 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       path: "scripts/master.sh"
     if NUM_WORKER_NODES != "0" and NUM_WORKER_NODES != "" and settings["extras"]["nfs"] and settings["extras"]["nfs"] = "true"
       master.vm.provision "shell",
+        env: {
+          "CONTROL_IP" => settings["network"]["control_ip"]
+        },
         path: "scripts/nfs.sh"
     end
   end
