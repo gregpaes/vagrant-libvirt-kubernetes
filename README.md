@@ -18,8 +18,8 @@ Refer this link for nfs-subdir-external-provisioner documentation: https://githu
 To provision the cluster, execute the following commands.
 
 ```shell
-git clone https://github.com/gregpaes/vagrant-libvirt-kubeadm-kubernetes-nfs.git
-cd vagrant-libvirt-kubeadm-kubernetes-nfs
+git clone https://github.com/gregpaes/vagrant-libvirt-kubernetes.git
+cd vagrant-libvirt-kubernetes
 vagrant up --provider=libvirt --no-parallel
 ```
 ## Install Kubernetes Dashboard
@@ -57,7 +57,7 @@ vagrant halt
 ## To restart the cluster,
 
 ```shell
-vagrant up
+vagrant up --no-parallel
 ```
 
 ## To destroy the cluster,
